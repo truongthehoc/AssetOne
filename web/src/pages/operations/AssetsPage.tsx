@@ -3,6 +3,7 @@ import { api } from '../../lib/api.js';
 import { useToast } from '../../context/ToastContext.js';
 import { Modal } from '../../components/common/Modal.js';
 import { ConfirmDialog } from '../../components/common/ConfirmDialog.js';
+import { SearchableSelect } from '../../components/common/SearchableSelect.js';
 import {
   Boxes,
   CheckCircle2,
@@ -532,18 +533,17 @@ export const AssetsPage: React.FC = () => {
                 <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
                   Loại tài sản <span className="text-rose-500">*</span>
                 </label>
-                <select
-                  required
+                <SearchableSelect
                   value={formData.categoryId}
-                  onChange={(e) => handleCategoryChange(e.target.value)}
-                  className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-coral-500/20 focus:border-coral-500 bg-white dark:bg-slate-800"
-                >
-                  {categories.map((c) => (
-                    <option key={c.id} value={c.id}>
-                      {c.name} ({c.prefixCode})
-                    </option>
-                  ))}
-                </select>
+                  onChange={(val) => handleCategoryChange(val)}
+                  options={categories.map((c) => ({
+                    value: c.id,
+                    label: c.name,
+                    sublabel: c.prefixCode,
+                  }))}
+                  placeholder="-- Chọn loại tài sản --"
+                  searchPlaceholder="Gõ tên hoặc mã loại để tìm..."
+                />
               </div>
 
               <div>
@@ -580,36 +580,40 @@ export const AssetsPage: React.FC = () => {
                 <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
                   Kho lưu trữ ban đầu
                 </label>
-                <select
+                <SearchableSelect
                   value={formData.warehouseId}
-                  onChange={(e) => setFormData({ ...formData, warehouseId: e.target.value })}
-                  className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-coral-500/20 focus:border-coral-500 bg-white dark:bg-slate-800"
-                >
-                  <option value="">-- Chưa nhập kho --</option>
-                  {warehouses.map((w) => (
-                    <option key={w.id} value={w.id}>
-                      {w.name}
-                    </option>
-                  ))}
-                </select>
+                  onChange={(val) => setFormData({ ...formData, warehouseId: val })}
+                  options={[
+                    { value: '', label: '-- Chưa nhập kho --' },
+                    ...warehouses.map((w) => ({
+                      value: w.id,
+                      label: w.name,
+                      sublabel: w.code,
+                    })),
+                  ]}
+                  placeholder="-- Chưa nhập kho --"
+                  searchPlaceholder="Gõ tên hoặc mã kho để tìm..."
+                />
               </div>
 
               <div>
                 <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
                   Nhà cung cấp
                 </label>
-                <select
+                <SearchableSelect
                   value={formData.vendorId}
-                  onChange={(e) => setFormData({ ...formData, vendorId: e.target.value })}
-                  className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-coral-500/20 focus:border-coral-500 bg-white dark:bg-slate-800"
-                >
-                  <option value="">-- Chọn nhà cung cấp --</option>
-                  {vendors.map((v) => (
-                    <option key={v.id} value={v.id}>
-                      {v.name}
-                    </option>
-                  ))}
-                </select>
+                  onChange={(val) => setFormData({ ...formData, vendorId: val })}
+                  options={[
+                    { value: '', label: '-- Chọn nhà cung cấp --' },
+                    ...vendors.map((v) => ({
+                      value: v.id,
+                      label: v.name,
+                      sublabel: v.code,
+                    })),
+                  ]}
+                  placeholder="-- Chọn nhà cung cấp --"
+                  searchPlaceholder="Gõ tên hoặc mã NCC để tìm..."
+                />
               </div>
             </div>
           </div>

@@ -3,6 +3,7 @@ import { api } from '../../lib/api.js';
 import { useToast } from '../../context/ToastContext.js';
 import { Modal } from '../../components/common/Modal.js';
 import { ConfirmDialog } from '../../components/common/ConfirmDialog.js';
+import { SearchableSelect } from '../../components/common/SearchableSelect.js';
 import {
   Users,
   Plus,
@@ -428,38 +429,39 @@ export const EmployeesPage: React.FC = () => {
                 <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
                   Phòng ban trực thuộc <span className="text-rose-500">*</span>
                 </label>
-                <select
-                  required
+                <SearchableSelect
                   value={formData.departmentId}
-                  onChange={(e) => setFormData({ ...formData, departmentId: e.target.value })}
-                  className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-coral-500/20 focus:border-coral-500 bg-white dark:bg-slate-800"
-                >
-                  <option value="">-- Chọn phòng ban --</option>
-                  {departments.map((d) => (
-                    <option key={d.id} value={d.id}>
-                      {'— '.repeat(d.level - 1)} {d.name} (Cấp {d.level})
-                    </option>
-                  ))}
-                </select>
+                  onChange={(val) => setFormData({ ...formData, departmentId: val })}
+                  options={[
+                    { value: '', label: '-- Chọn phòng ban --' },
+                    ...departments.map((d) => ({
+                      value: d.id,
+                      label: `${'— '.repeat(d.level - 1)}${d.name}`,
+                      sublabel: `Cấp ${d.level}`,
+                    })),
+                  ]}
+                  placeholder="-- Chọn phòng ban --"
+                  searchPlaceholder="Gõ tên phòng ban để tìm..."
+                />
               </div>
 
               <div>
                 <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
                   Chức danh / Chức vụ <span className="text-rose-500">*</span>
                 </label>
-                <select
-                  required
+                <SearchableSelect
                   value={formData.positionId}
-                  onChange={(e) => setFormData({ ...formData, positionId: e.target.value })}
-                  className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-coral-500/20 focus:border-coral-500 bg-white dark:bg-slate-800"
-                >
-                  <option value="">-- Chọn chức danh / chức vụ --</option>
-                  {positions.map((p) => (
-                    <option key={p.id} value={p.id}>
-                      {p.name}
-                    </option>
-                  ))}
-                </select>
+                  onChange={(val) => setFormData({ ...formData, positionId: val })}
+                  options={[
+                    { value: '', label: '-- Chọn chức danh / chức vụ --' },
+                    ...positions.map((p) => ({
+                      value: p.id,
+                      label: p.name,
+                    })),
+                  ]}
+                  placeholder="-- Chọn chức danh / chức vụ --"
+                  searchPlaceholder="Gõ tên chức vụ để tìm..."
+                />
               </div>
 
               <div>

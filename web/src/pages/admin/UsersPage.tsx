@@ -4,6 +4,7 @@ import { useToast } from '../../context/ToastContext.js';
 import { useAuth } from '../../context/AuthContext.js';
 import { Modal } from '../../components/common/Modal.js';
 import { ConfirmDialog } from '../../components/common/ConfirmDialog.js';
+import { SearchableSelect } from '../../components/common/SearchableSelect.js';
 import {
   Users,
   Plus,
@@ -347,18 +348,20 @@ export const UsersPage: React.FC = () => {
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
                 Liên kết với Nhân viên hồ sơ
               </label>
-              <select
+              <SearchableSelect
                 value={formData.employeeId}
-                onChange={(e) => setFormData({ ...formData, employeeId: e.target.value })}
-                className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-coral-500/20 focus:border-coral-500 bg-white dark:bg-slate-800"
-              >
-                <option value="">-- Không liên kết nhân viên (Tài khoản độc lập) --</option>
-                {employees.map((emp) => (
-                  <option key={emp.id} value={emp.id}>
-                    {emp.fullName} ({emp.employeeCode}) - {emp.department?.name}
-                  </option>
-                ))}
-              </select>
+                onChange={(val) => setFormData({ ...formData, employeeId: val })}
+                options={[
+                  { value: '', label: '-- Không liên kết nhân viên (Tài khoản độc lập) --' },
+                  ...employees.map((emp) => ({
+                    value: emp.id,
+                    label: `${emp.fullName} (${emp.employeeCode})`,
+                    sublabel: emp.department?.name,
+                  })),
+                ]}
+                placeholder="-- Không liên kết nhân viên (Tài khoản độc lập) --"
+                searchPlaceholder="Gõ tên, mã NV hoặc phòng ban để tìm..."
+              />
             </div>
 
             {selectedEmployee && (

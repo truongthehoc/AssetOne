@@ -3,6 +3,7 @@ import { api } from '../../lib/api.js';
 import { useToast } from '../../context/ToastContext.js';
 import { Modal } from '../../components/common/Modal.js';
 import { ConfirmDialog } from '../../components/common/ConfirmDialog.js';
+import { SearchableSelect } from '../../components/common/SearchableSelect.js';
 import {
   Network,
   Plus,
@@ -401,20 +402,22 @@ export const DepartmentsPage: React.FC = () => {
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
                 Phòng ban cha trực thuộc (Để trống nếu là phòng ban gốc)
               </label>
-              <select
+              <SearchableSelect
                 value={formData.parentId}
-                onChange={(e) => setFormData({ ...formData, parentId: e.target.value })}
-                className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-coral-500/20 focus:border-coral-500 bg-white dark:bg-slate-800"
-              >
-                <option value="">-- Là phòng ban gốc --</option>
-                {flatList
-                  .filter((d) => !editingDept || d.id !== editingDept.id)
-                  .map((d) => (
-                    <option key={d.id} value={d.id}>
-                      {'— '.repeat(d.level - 1)} {d.name} (Cấp {d.level})
-                    </option>
-                  ))}
-              </select>
+                onChange={(val) => setFormData({ ...formData, parentId: val })}
+                options={[
+                  { value: '', label: '-- Là phòng ban gốc --' },
+                  ...flatList
+                    .filter((d) => !editingDept || d.id !== editingDept.id)
+                    .map((d) => ({
+                      value: d.id,
+                      label: `${'— '.repeat(d.level - 1)}${d.name}`,
+                      sublabel: `Cấp ${d.level}`,
+                    })),
+                ]}
+                placeholder="-- Là phòng ban gốc --"
+                searchPlaceholder="Gõ tên phòng ban để tìm..."
+              />
             </div>
 
             <div>

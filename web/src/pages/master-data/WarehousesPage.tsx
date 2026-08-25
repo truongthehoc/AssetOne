@@ -3,6 +3,7 @@ import { api } from '../../lib/api.js';
 import { useToast } from '../../context/ToastContext.js';
 import { Modal } from '../../components/common/Modal.js';
 import { ConfirmDialog } from '../../components/common/ConfirmDialog.js';
+import { SearchableSelect } from '../../components/common/SearchableSelect.js';
 import {
   Warehouse as WarehouseIcon,
   Plus,
@@ -325,18 +326,20 @@ export const WarehousesPage: React.FC = () => {
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
                 Nhân viên phụ trách / Thủ kho
               </label>
-              <select
+              <SearchableSelect
                 value={formData.managerEmployeeId}
-                onChange={(e) => setFormData({ ...formData, managerEmployeeId: e.target.value })}
-                className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-coral-500/20 focus:border-coral-500 bg-white dark:bg-slate-800"
-              >
-                <option value="">-- Chưa chỉ định thủ kho --</option>
-                {employees.map((emp) => (
-                  <option key={emp.id} value={emp.id}>
-                    {emp.fullName} ({emp.employeeCode})
-                  </option>
-                ))}
-              </select>
+                onChange={(val) => setFormData({ ...formData, managerEmployeeId: val })}
+                options={[
+                  { value: '', label: '-- Chưa chỉ định thủ kho --' },
+                  ...employees.map((emp) => ({
+                    value: emp.id,
+                    label: emp.fullName,
+                    sublabel: emp.employeeCode,
+                  })),
+                ]}
+                placeholder="-- Chưa chỉ định thủ kho --"
+                searchPlaceholder="Gõ tên hoặc mã nhân viên để tìm..."
+              />
             </div>
 
             <div>
