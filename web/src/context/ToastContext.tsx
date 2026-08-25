@@ -47,7 +47,8 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   return (
     <ToastContext.Provider value={value}>
       {children}
-      <div className="fixed bottom-5 right-5 z-50 flex flex-col gap-2 max-w-md w-full pointer-events-none px-4">
+      {/* Toast Container Positioned Top Right */}
+      <div className="fixed top-5 right-5 z-[100] flex flex-col gap-2 max-w-md w-full pointer-events-none px-4">
         {toasts.map((t) => {
           const bgColors = {
             success: 'bg-emerald-50 border-emerald-300 text-emerald-900',
@@ -66,7 +67,7 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
           return (
             <div
               key={t.id}
-              className={`pointer-events-auto flex items-start gap-3 p-4 rounded-xl border shadow-lg transition-all transform animate-in slide-in-from-bottom-2 duration-200 ${bgColors[t.type]}`}
+              className={`pointer-events-auto flex items-start gap-3 p-4 rounded-xl border shadow-xl transition-all transform animate-in slide-in-from-top-2 duration-200 ${bgColors[t.type]}`}
             >
               {icons[t.type]}
               <div className="flex-1 text-sm">
