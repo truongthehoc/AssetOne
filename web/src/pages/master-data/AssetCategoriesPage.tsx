@@ -190,7 +190,7 @@ export const AssetCategoriesPage: React.FC = () => {
               <tr className="bg-slate-50/90 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-700 text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                 <th className="py-3.5 px-4 w-36">Mã & Tiền tố</th>
                 <th className="py-3.5 px-4">Tên loại tài sản</th>
-                <th className="py-3.5 px-4 text-center w-36">Vòng đời</th>
+                <th className="py-3.5 px-4 text-center w-36">Khấu hao</th>
                 <th className="py-3.5 px-4 text-center w-32">Số tài sản</th>
                 <th className="py-3.5 px-4">Mô tả chi tiết</th>
                 <th className="py-3.5 px-4 text-right w-28">Thao tác</th>
@@ -274,7 +274,7 @@ export const AssetCategoriesPage: React.FC = () => {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         title={editingCat ? `Chỉnh sửa loại tài sản: ${editingCat.name}` : 'Thêm mới loại tài sản'}
-        subtitle="Thiết lập danh mục trang thiết bị, tiền tố mã và vòng đời"
+        subtitle="Thiết lập danh mục trang thiết bị, tiền tố mã và thời gian khấu hao"
         maxWidth="md"
       >
         <form onSubmit={handleSubmit} className="flex flex-col h-full">
@@ -310,12 +310,11 @@ export const AssetCategoriesPage: React.FC = () => {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                  Tiền tố mã tài sản <span className="text-rose-500">*</span>
+                  Tiền tố mã tài sản
                 </label>
                 <input
                   type="text"
-                  required
-                  placeholder="Nhập tiền tố mã tài sản"
+                  placeholder="Nhập tiền tố mã tài sản (Không bắt buộc)"
                   value={formData.prefixCode}
                   onChange={(e) => setFormData({ ...formData, prefixCode: e.target.value })}
                   className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-coral-500/20 focus:border-coral-500 font-mono uppercase bg-white dark:bg-slate-800"
@@ -324,10 +323,11 @@ export const AssetCategoriesPage: React.FC = () => {
 
               <div>
                 <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                  Vòng đời (tháng)
+                  Khấu hao (tháng)
                 </label>
                 <input
                   type="number"
+                  placeholder="Nhập thời gian khấu hao"
                   value={formData.expectedLifespanMonths}
                   onChange={(e) => setFormData({ ...formData, expectedLifespanMonths: Number(e.target.value) })}
                   className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-coral-500/20 focus:border-coral-500 bg-white dark:bg-slate-800"
