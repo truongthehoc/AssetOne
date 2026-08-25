@@ -183,85 +183,91 @@ export const WarehousesPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Grid Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {loading ? (
-          <div className="col-span-full py-12 text-center text-slate-400">
-            Đang tải dữ liệu kho...
-          </div>
-        ) : filteredList.length === 0 ? (
-          <div className="col-span-full py-12 text-center text-slate-400">
-            Không tìm thấy kho nào.
-          </div>
-        ) : (
-          filteredList.map((wh) => (
-            <div
-              key={wh.id}
-              className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs hover:shadow-md transition flex flex-col justify-between"
-            >
-              <div>
-                <div className="flex items-start justify-between gap-3 mb-3">
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-950 border border-amber-100 dark:border-amber-900 flex items-center justify-center text-amber-600 dark:text-amber-400">
-                      <WarehouseIcon className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <h3 className="text-sm font-bold text-slate-800 dark:text-white">{wh.name}</h3>
-                      <span className="font-mono text-[11px] font-medium text-slate-400">{wh.code}</span>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-1">
-                    <button
-                      onClick={() => handleOpenEditModal(wh)}
-                      className="p-1.5 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition"
-                      title="Sửa"
-                    >
-                      <Edit2 className="w-4 h-4" />
-                    </button>
-                    <button
-                      onClick={() => setDeleteConfirmWarehouse(wh)}
-                      className="p-1.5 text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950 rounded-lg transition"
-                      title="Xóa"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
-                  </div>
-                </div>
-
-                <div className="space-y-2 mb-4 text-xs">
-                  <div className="flex items-center gap-2 text-slate-600 dark:text-slate-400">
-                    <MapPin className="w-4 h-4 text-slate-400 shrink-0" />
-                    <span>{wh.location || 'Chưa cập nhật vị trí'}</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-slate-600 dark:text-slate-400">
-                    <User className="w-4 h-4 text-slate-400 shrink-0" />
-                    <span>
-                      Thủ kho:{' '}
-                      <strong className="text-slate-800 dark:text-slate-200">
-                        {wh.managerEmployee?.fullName || 'Chưa chỉ định'}
-                      </strong>
-                    </span>
-                  </div>
-                </div>
-
-                {wh.description && (
-                  <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 mb-3 bg-slate-50 dark:bg-slate-800 p-2 rounded-xl">
-                    {wh.description}
-                  </p>
-                )}
-              </div>
-
-              <div className="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs">
-                <span className="text-slate-500 dark:text-slate-400 text-[11px]">Tài sản trong kho:</span>
-                <div className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-coral-50 dark:bg-coral-950 text-coral-700 dark:text-coral-300 font-bold text-xs border border-coral-100 dark:border-coral-900">
-                  <Boxes className="w-3.5 h-3.5 text-coral-600 dark:text-coral-400" />
-                  <span>{wh._count?.assets || 0} tài sản</span>
-                </div>
-              </div>
-            </div>
-          ))
-        )}
+      {/* Data Table List */}
+      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="bg-slate-50/90 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-700 text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                <th className="py-3.5 px-4 w-36">Mã kho</th>
+                <th className="py-3.5 px-4">Tên kho lưu trữ</th>
+                <th className="py-3.5 px-4">Vị trí / Địa điểm</th>
+                <th className="py-3.5 px-4">Thủ kho phụ trách</th>
+                <th className="py-3.5 px-4 text-center w-32">Số tài sản</th>
+                <th className="py-3.5 px-4">Mô tả</th>
+                <th className="py-3.5 px-4 text-right w-28">Thao tác</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100 dark:divide-slate-800 text-xs">
+              {loading ? (
+                <tr>
+                  <td colSpan={7} className="py-12 text-center text-slate-400">
+                    Đang tải dữ liệu kho...
+                  </td>
+                </tr>
+              ) : filteredList.length === 0 ? (
+                <tr>
+                  <td colSpan={7} className="py-12 text-center text-slate-400">
+                    Không tìm thấy kho lưu trữ nào.
+                  </td>
+                </tr>
+              ) : (
+                filteredList.map((wh) => (
+                  <tr
+                    key={wh.id}
+                    className="hover:bg-slate-50/80 dark:hover:bg-slate-800/60 transition group border-b border-slate-100 dark:border-slate-800"
+                  >
+                    <td className="py-3.5 px-4 font-mono font-bold text-coral-700 dark:text-coral-400">
+                      {wh.code}
+                    </td>
+                    <td className="py-3.5 px-4 font-bold text-slate-900 dark:text-white">
+                      {wh.name}
+                    </td>
+                    <td className="py-3.5 px-4 text-slate-700 dark:text-slate-300">
+                      <div className="flex items-center gap-1.5">
+                        <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                        <span>{wh.location || '—'}</span>
+                      </div>
+                    </td>
+                    <td className="py-3.5 px-4 text-slate-700 dark:text-slate-300 font-medium">
+                      <div className="flex items-center gap-1.5">
+                        <User className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                        <span>{wh.managerEmployee?.fullName || 'Chưa chỉ định'}</span>
+                      </div>
+                    </td>
+                    <td className="py-3.5 px-4 text-center">
+                      <div className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-coral-50 dark:bg-coral-950 text-coral-700 dark:text-coral-300 font-bold text-xs border border-coral-100 dark:border-coral-900">
+                        <Boxes className="w-3.5 h-3.5 text-coral-600 dark:text-coral-400" />
+                        <span>{wh._count?.assets || 0}</span>
+                      </div>
+                    </td>
+                    <td className="py-3.5 px-4 text-slate-600 dark:text-slate-400 max-w-xs truncate">
+                      {wh.description || '—'}
+                    </td>
+                    <td className="py-3.5 px-4 text-right">
+                      <div className="flex items-center justify-end gap-1.5 opacity-80 group-hover:opacity-100 transition">
+                        <button
+                          onClick={() => handleOpenEditModal(wh)}
+                          className="p-1.5 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition"
+                          title="Sửa"
+                        >
+                          <Edit2 className="w-4 h-4" />
+                        </button>
+                        <button
+                          onClick={() => setDeleteConfirmWarehouse(wh)}
+                          className="p-1.5 text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950 rounded-lg transition"
+                          title="Xóa"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {/* Slide-over Drawer */}

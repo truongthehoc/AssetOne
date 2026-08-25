@@ -182,70 +182,91 @@ export const AssetCategoriesPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Grid Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {loading ? (
-          <div className="col-span-full py-12 text-center text-slate-400">
-            Đang tải dữ liệu loại tài sản...
-          </div>
-        ) : filteredList.length === 0 ? (
-          <div className="col-span-full py-12 text-center text-slate-400">
-            Không tìm thấy loại tài sản nào.
-          </div>
-        ) : (
-          filteredList.map((cat) => (
-            <div
-              key={cat.id}
-              className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs hover:shadow-md transition group flex flex-col justify-between"
-            >
-              <div>
-                <div className="flex items-start justify-between gap-3 mb-3">
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-10 h-10 rounded-xl bg-coral-50 dark:bg-coral-950 border border-coral-100 dark:border-coral-900 flex items-center justify-center text-coral-600 dark:text-coral-400 font-bold text-sm">
-                      {cat.prefixCode}
-                    </div>
-                    <div>
-                      <h3 className="text-sm font-bold text-slate-800 dark:text-white">{cat.name}</h3>
-                      <span className="font-mono text-[11px] font-medium text-slate-400">{cat.code}</span>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-1 opacity-80 group-hover:opacity-100 transition">
-                    <button
-                      onClick={() => handleOpenEditModal(cat)}
-                      className="p-1.5 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition"
-                      title="Sửa"
-                    >
-                      <Edit2 className="w-4 h-4" />
-                    </button>
-                    <button
-                      onClick={() => setDeleteConfirmCat(cat)}
-                      className="p-1.5 text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950 rounded-lg transition"
-                      title="Xóa"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
-                  </div>
-                </div>
-
-                <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 mb-4">
-                  {cat.description || 'Chưa có mô tả chi tiết.'}
-                </p>
-              </div>
-
-              <div className="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs">
-                <div className="flex items-center gap-1.5 text-slate-600 dark:text-slate-400">
-                  <Clock className="w-3.5 h-3.5 text-slate-400" />
-                  <span>Vòng đời: <strong>{cat.expectedLifespanMonths}</strong> tháng</span>
-                </div>
-                <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-coral-50 dark:bg-coral-950 text-coral-700 dark:text-coral-300 font-bold text-[11px] border border-coral-100 dark:border-coral-900">
-                  <Boxes className="w-3 h-3 text-coral-600 dark:text-coral-400" />
-                  <span>{cat._count?.assets || 0} tài sản</span>
-                </div>
-              </div>
-            </div>
-          ))
-        )}
+      {/* Data Table List */}
+      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="bg-slate-50/90 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-700 text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                <th className="py-3.5 px-4 w-36">Mã & Tiền tố</th>
+                <th className="py-3.5 px-4">Tên loại tài sản</th>
+                <th className="py-3.5 px-4 text-center w-36">Vòng đời</th>
+                <th className="py-3.5 px-4 text-center w-32">Số tài sản</th>
+                <th className="py-3.5 px-4">Mô tả chi tiết</th>
+                <th className="py-3.5 px-4 text-right w-28">Thao tác</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100 dark:divide-slate-800 text-xs">
+              {loading ? (
+                <tr>
+                  <td colSpan={6} className="py-12 text-center text-slate-400">
+                    Đang tải danh mục loại tài sản...
+                  </td>
+                </tr>
+              ) : filteredList.length === 0 ? (
+                <tr>
+                  <td colSpan={6} className="py-12 text-center text-slate-400">
+                    Không tìm thấy loại tài sản nào.
+                  </td>
+                </tr>
+              ) : (
+                filteredList.map((cat) => (
+                  <tr
+                    key={cat.id}
+                    className="hover:bg-slate-50/80 dark:hover:bg-slate-800/60 transition group border-b border-slate-100 dark:border-slate-800"
+                  >
+                    <td className="py-3.5 px-4">
+                      <div className="flex items-center gap-2">
+                        <span className="w-7 h-7 rounded-lg bg-coral-100 dark:bg-coral-950 text-coral-800 dark:text-coral-300 font-bold text-xs flex items-center justify-center font-mono">
+                          {cat.prefixCode}
+                        </span>
+                        <span className="font-mono font-semibold text-slate-500 dark:text-slate-400 text-[11px]">
+                          {cat.code}
+                        </span>
+                      </div>
+                    </td>
+                    <td className="py-3.5 px-4 font-bold text-slate-900 dark:text-white">
+                      {cat.name}
+                    </td>
+                    <td className="py-3.5 px-4 text-center">
+                      <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-blue-50 dark:bg-blue-950 text-blue-700 dark:text-blue-300 font-semibold text-xs border border-blue-100 dark:border-blue-900">
+                        <Clock className="w-3.5 h-3.5 text-blue-500" />
+                        <span>{cat.expectedLifespanMonths} tháng</span>
+                      </div>
+                    </td>
+                    <td className="py-3.5 px-4 text-center">
+                      <div className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-coral-50 dark:bg-coral-950 text-coral-700 dark:text-coral-300 font-bold text-xs border border-coral-100 dark:border-coral-900">
+                        <Boxes className="w-3.5 h-3.5 text-coral-600 dark:text-coral-400" />
+                        <span>{cat._count?.assets || 0}</span>
+                      </div>
+                    </td>
+                    <td className="py-3.5 px-4 text-slate-600 dark:text-slate-400 max-w-sm truncate">
+                      {cat.description || '—'}
+                    </td>
+                    <td className="py-3.5 px-4 text-right">
+                      <div className="flex items-center justify-end gap-1.5 opacity-80 group-hover:opacity-100 transition">
+                        <button
+                          onClick={() => handleOpenEditModal(cat)}
+                          className="p-1.5 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition"
+                          title="Sửa"
+                        >
+                          <Edit2 className="w-4 h-4" />
+                        </button>
+                        <button
+                          onClick={() => setDeleteConfirmCat(cat)}
+                          className="p-1.5 text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950 rounded-lg transition"
+                          title="Xóa"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {/* Slide-over Drawer */}
