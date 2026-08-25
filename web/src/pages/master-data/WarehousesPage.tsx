@@ -72,7 +72,7 @@ export const WarehousesPage: React.FC = () => {
       code: '',
       name: '',
       location: '',
-      managerEmployeeId: employees[0]?.id || '',
+      managerEmployeeId: '',
       description: '',
     });
     setIsModalOpen(true);
