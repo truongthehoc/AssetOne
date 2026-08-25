@@ -291,14 +291,14 @@ export const UsersPage: React.FC = () => {
                       </span>
                     </td>
 
-                    <td className="py-3.5 px-4 text-center">
+                    <td className="py-3.5 px-4 text-center whitespace-nowrap">
                       {u.isActive ? (
-                        <span className="inline-flex items-center gap-1 text-emerald-700 dark:text-emerald-300 text-[11px] font-semibold">
+                        <span className="inline-flex items-center gap-1 text-emerald-700 dark:text-emerald-300 text-[11px] font-semibold whitespace-nowrap">
                           <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
                           <span>Kích hoạt</span>
                         </span>
                       ) : (
-                        <span className="inline-flex items-center gap-1 text-rose-600 dark:text-rose-400 text-[11px] font-semibold">
+                        <span className="inline-flex items-center gap-1 text-rose-600 dark:text-rose-400 text-[11px] font-semibold whitespace-nowrap">
                           <XCircle className="w-3.5 h-3.5 text-rose-500" />
                           <span>Đã khóa</span>
                         </span>

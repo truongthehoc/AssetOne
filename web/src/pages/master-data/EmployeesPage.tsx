@@ -281,7 +281,7 @@ export const EmployeesPage: React.FC = () => {
                 <th className="py-3.5 px-4">Phòng ban</th>
                 <th className="py-3.5 px-4">Chức vụ</th>
                 <th className="py-3.5 px-4">Liên hệ</th>
-                <th className="py-3.5 px-4 text-center w-28">Trạng thái</th>
+                <th className="py-3.5 px-4 text-center whitespace-nowrap min-w-[120px]">Trạng thái</th>
                 <th className="py-3.5 px-4 text-center w-28">Tài khoản</th>
                 <th className="py-3.5 px-4 text-right w-28">Thao tác</th>
               </tr>
@@ -343,8 +343,8 @@ export const EmployeesPage: React.FC = () => {
                         {!emp.email && !emp.phone && <span className="text-slate-400">—</span>}
                       </div>
                     </td>
-                    <td className="py-3.5 px-4 text-center">
-                      <span className={`inline-block px-2.5 py-1 rounded-full text-[10px] font-bold ${statusBadges[emp.status]?.bg}`}>
+                    <td className="py-3.5 px-4 text-center whitespace-nowrap">
+                      <span className={`inline-block px-2.5 py-1 rounded-full text-[10px] font-bold whitespace-nowrap ${statusBadges[emp.status]?.bg}`}>
                         {statusBadges[emp.status]?.label || emp.status}
                       </span>
                     </td>
