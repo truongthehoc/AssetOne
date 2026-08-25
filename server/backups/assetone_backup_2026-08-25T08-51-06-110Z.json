@@ -1,0 +1,537 @@
+{
+  "version": "1.0.0",
+  "exportedAt": "2026-08-25T08:51:06.120Z",
+  "data": {
+    "departments": [
+      {
+        "id": "4e48235e-333a-4786-8ac3-630b8aeb0684",
+        "code": "TO_HTM",
+        "name": "Tổ Quản trị Mạng & Hạ tầng",
+        "parentId": "58951e80-4745-445c-8141-537ebf46986c",
+        "level": 2,
+        "orderIndex": 1,
+        "description": "Phụ trách máy chủ, switch, wifi, camera và máy trạm",
+        "createdAt": "2026-08-25T08:39:51.173Z",
+        "updatedAt": "2026-08-25T08:39:51.173Z"
+      },
+      {
+        "id": "58951e80-4745-445c-8141-537ebf46986c",
+        "code": "PHONG_CNTT",
+        "name": "Phòng Công Nghệ Thông Tin",
+        "parentId": null,
+        "level": 1,
+        "orderIndex": 3,
+        "description": "Quản lý toàn bộ hệ thống CNTT và thiết bị thông tin",
+        "createdAt": "2026-08-25T08:39:51.171Z",
+        "updatedAt": "2026-08-25T08:39:51.171Z"
+      },
+      {
+        "id": "7521f04b-6edc-4d68-8748-06c1b79dc6dc",
+        "code": "PK_101",
+        "name": "Phòng Khám 101 - Nội Tổng Quát",
+        "parentId": "bdc5fef8-b064-4c17-ae04-2075ef76904e",
+        "level": 2,
+        "orderIndex": 1,
+        "description": "Phòng khám nội khoa tổng quát tầng 1",
+        "createdAt": "2026-08-25T08:39:51.160Z",
+        "updatedAt": "2026-08-25T08:39:51.160Z"
+      },
+      {
+        "id": "930d9827-e1d6-4e1f-82b2-304f224eca10",
+        "code": "PK_103",
+        "name": "Phòng Khám 103 - Nhi Khoa",
+        "parentId": "bdc5fef8-b064-4c17-ae04-2075ef76904e",
+        "level": 2,
+        "orderIndex": 3,
+        "description": "Phòng khám chuyên khoa nhi tầng 1",
+        "createdAt": "2026-08-25T08:39:51.168Z",
+        "updatedAt": "2026-08-25T08:39:51.168Z"
+      },
+      {
+        "id": "aa369f61-41aa-4325-8285-c527f2fd20e1",
+        "code": "TO_PMDL",
+        "name": "Tổ Phần mềm & Dữ liệu",
+        "parentId": "58951e80-4745-445c-8141-537ebf46986c",
+        "level": 2,
+        "orderIndex": 2,
+        "description": "Phụ trách phần mềm HIS/LIS/PACS và cơ sở dữ liệu",
+        "createdAt": "2026-08-25T08:39:51.175Z",
+        "updatedAt": "2026-08-25T08:39:51.175Z"
+      },
+      {
+        "id": "b264244c-ce74-437c-93f2-6d4ffec981a6",
+        "code": "BGD",
+        "name": "Ban Giám Đốc",
+        "parentId": null,
+        "level": 1,
+        "orderIndex": 1,
+        "description": "Cấp lãnh đạo cao nhất của đơn vị",
+        "createdAt": "2026-08-25T08:39:51.153Z",
+        "updatedAt": "2026-08-25T08:39:51.153Z"
+      },
+      {
+        "id": "bdc5fef8-b064-4c17-ae04-2075ef76904e",
+        "code": "KHOA_KB",
+        "name": "Khoa Khám Bệnh",
+        "parentId": null,
+        "level": 1,
+        "orderIndex": 2,
+        "description": "Khoa tiếp đón và khám bệnh ngoại trú",
+        "createdAt": "2026-08-25T08:39:51.157Z",
+        "updatedAt": "2026-08-25T08:39:51.157Z"
+      },
+      {
+        "id": "ef160bc5-3025-47ee-8f04-720c59e98905",
+        "code": "PHONG_TCKT",
+        "name": "Phòng Tài Chính - Kế Toán",
+        "parentId": null,
+        "level": 1,
+        "orderIndex": 4,
+        "description": "Quản lý tài chính, hạch toán và tài sản cố định",
+        "createdAt": "2026-08-25T08:39:51.177Z",
+        "updatedAt": "2026-08-25T08:39:51.177Z"
+      },
+      {
+        "id": "fc1c807d-bacf-44b5-add6-5abb3148ca38",
+        "code": "PK_102",
+        "name": "Phòng Khám 102 - Ngoại Khoa",
+        "parentId": "bdc5fef8-b064-4c17-ae04-2075ef76904e",
+        "level": 2,
+        "orderIndex": 2,
+        "description": "Phòng khám chuyên khoa ngoại tầng 1",
+        "createdAt": "2026-08-25T08:39:51.166Z",
+        "updatedAt": "2026-08-25T08:39:51.166Z"
+      }
+    ],
+    "positions": [
+      {
+        "id": "0d9c9f90-31a7-4572-b870-7a6d1c63d978",
+        "code": "DOCTOR",
+        "name": "Bác sĩ Khám bệnh",
+        "description": "Khám và điều trị",
+        "createdAt": "2026-08-25T08:39:51.149Z",
+        "updatedAt": "2026-08-25T08:39:51.149Z"
+      },
+      {
+        "id": "236581c2-c401-40cf-acf7-a7f9356e5b8f",
+        "code": "ACCOUNTANT",
+        "name": "Kế toán viên",
+        "description": "Theo dõi tài chính và tài sản",
+        "createdAt": "2026-08-25T08:39:51.151Z",
+        "updatedAt": "2026-08-25T08:39:51.151Z"
+      },
+      {
+        "id": "aec33ce6-ca4e-4092-9784-46b9b3fe4395",
+        "code": "HEAD_DOCTOR",
+        "name": "Trưởng khoa / Bác sĩ Trưởng",
+        "description": "Quản lý khoa chuyên môn",
+        "createdAt": "2026-08-25T08:39:51.146Z",
+        "updatedAt": "2026-08-25T08:39:51.146Z"
+      },
+      {
+        "id": "dbb64780-27f4-4b46-9ba9-ee5c4fe55d29",
+        "code": "IT_HEAD",
+        "name": "Trưởng phòng CNTT",
+        "description": "Quản lý toàn bộ hoạt động CNTT",
+        "createdAt": "2026-08-25T08:39:51.141Z",
+        "updatedAt": "2026-08-25T08:39:51.141Z"
+      },
+      {
+        "id": "dd5b841c-a678-4cd6-9c45-6a4a21845b01",
+        "code": "NET_ENG",
+        "name": "Kỹ sư Mạng & Hạ tầng",
+        "description": "Vận hành và bảo trì mạng LAN/WAN",
+        "createdAt": "2026-08-25T08:39:51.144Z",
+        "updatedAt": "2026-08-25T08:39:51.144Z"
+      },
+      {
+        "id": "f8f1a3e8-892b-4f41-a0c7-a4165da696e2",
+        "code": "IT_ADMIN",
+        "name": "Quản trị viên Hệ thống IT",
+        "description": "Chịu trách nhiệm quản trị hệ thống, máy chủ và hạ tầng CNTT",
+        "createdAt": "2026-08-25T08:39:51.138Z",
+        "updatedAt": "2026-08-25T08:39:51.138Z"
+      }
+    ],
+    "employees": [
+      {
+        "id": "7f5eefb5-a1e4-476c-ac5d-8d4dbc76c542",
+        "employeeCode": "NV-IT-001",
+        "fullName": "Nguyễn Văn Quản Trị",
+        "email": "admin@assetone.vn",
+        "phone": "0988 123 456",
+        "gender": "Nam",
+        "status": "ACTIVE",
+        "departmentId": "4e48235e-333a-4786-8ac3-630b8aeb0684",
+        "positionId": "f8f1a3e8-892b-4f41-a0c7-a4165da696e2",
+        "joinDate": "2022-01-15T00:00:00.000Z",
+        "createdAt": "2026-08-25T08:39:51.180Z",
+        "updatedAt": "2026-08-25T08:39:51.180Z"
+      },
+      {
+        "id": "9c2d8f8d-73d1-47c2-a78d-17d0caaa1f0e",
+        "employeeCode": "NV-IT-002",
+        "fullName": "Trần Thị Thu Hà",
+        "email": "ha.tran@assetone.vn",
+        "phone": "0977 234 567",
+        "gender": "Nữ",
+        "status": "ACTIVE",
+        "departmentId": "58951e80-4745-445c-8141-537ebf46986c",
+        "positionId": "dbb64780-27f4-4b46-9ba9-ee5c4fe55d29",
+        "joinDate": "2021-03-01T00:00:00.000Z",
+        "createdAt": "2026-08-25T08:39:51.184Z",
+        "updatedAt": "2026-08-25T08:39:51.184Z"
+      },
+      {
+        "id": "a2c59a72-d449-4bf9-bc90-ad6487add76a",
+        "employeeCode": "NV-BS-001",
+        "fullName": "Bác sĩ Bùi Tiến Đạt",
+        "email": "dat.bui@assetone.vn",
+        "phone": "0912 345 678",
+        "gender": "Nam",
+        "status": "ACTIVE",
+        "departmentId": "7521f04b-6edc-4d68-8748-06c1b79dc6dc",
+        "positionId": "0d9c9f90-31a7-4572-b870-7a6d1c63d978",
+        "joinDate": "2023-05-10T00:00:00.000Z",
+        "createdAt": "2026-08-25T08:39:51.188Z",
+        "updatedAt": "2026-08-25T08:39:51.188Z"
+      },
+      {
+        "id": "d684d217-82c0-4324-99d0-53bfdef6f91e",
+        "employeeCode": "NV-KT-001",
+        "fullName": "Hoàng Minh Tuấn",
+        "email": "tuan.hoang@assetone.vn",
+        "phone": "0934 567 890",
+        "gender": "Nam",
+        "status": "ACTIVE",
+        "departmentId": "ef160bc5-3025-47ee-8f04-720c59e98905",
+        "positionId": "236581c2-c401-40cf-acf7-a7f9356e5b8f",
+        "joinDate": "2022-08-20T00:00:00.000Z",
+        "createdAt": "2026-08-25T08:39:51.190Z",
+        "updatedAt": "2026-08-25T08:39:51.190Z"
+      }
+    ],
+    "users": [
+      {
+        "id": "8b3165dd-8d3d-47ff-81a4-17d8c401fe12",
+        "username": "ha.tran",
+        "role": "IT_STAFF",
+        "employeeId": "9c2d8f8d-73d1-47c2-a78d-17d0caaa1f0e",
+        "isActive": true,
+        "avatarUrl": null,
+        "createdAt": "2026-08-25T08:39:51.322Z"
+      },
+      {
+        "id": "ca568607-4b10-410d-84fc-35a1e9a25fb4",
+        "username": "admin",
+        "role": "ADMIN",
+        "employeeId": "7f5eefb5-a1e4-476c-ac5d-8d4dbc76c542",
+        "isActive": true,
+        "avatarUrl": null,
+        "createdAt": "2026-08-25T08:39:51.257Z"
+      }
+    ],
+    "assetCategories": [
+      {
+        "id": "172aeadf-acc8-47ed-a2d7-0400880f40ab",
+        "code": "CAT_LAPTOP",
+        "name": "Máy tính xách tay (Laptop)",
+        "prefixCode": "LT",
+        "icon": "Laptop",
+        "expectedLifespanMonths": 36,
+        "description": "Laptop cấp cho cán bộ di chuyển và nhân viên",
+        "createdAt": "2026-08-25T08:39:51.337Z",
+        "updatedAt": "2026-08-25T08:39:51.337Z"
+      },
+      {
+        "id": "34f67a81-61dc-437c-aa73-f3405421d6ef",
+        "code": "CAT_MONITOR",
+        "name": "Màn hình hiển thị (Monitor)",
+        "prefixCode": "MN",
+        "icon": "Tv",
+        "expectedLifespanMonths": 48,
+        "description": "Màn hình LCD/LED các kích thước",
+        "createdAt": "2026-08-25T08:39:51.347Z",
+        "updatedAt": "2026-08-25T08:39:51.347Z"
+      },
+      {
+        "id": "514e92c4-b574-486a-b136-28b8dc2b90b5",
+        "code": "CAT_PRINTER",
+        "name": "Máy in & Máy quét (Printer/Scanner)",
+        "prefixCode": "PRN",
+        "icon": "Printer",
+        "expectedLifespanMonths": 36,
+        "description": "Máy in laser, in màu, máy quét barcode/tài liệu",
+        "createdAt": "2026-08-25T08:39:51.351Z",
+        "updatedAt": "2026-08-25T08:39:51.351Z"
+      },
+      {
+        "id": "b666f030-8a8d-44cc-8d08-726bef4e4d77",
+        "code": "CAT_PC",
+        "name": "Máy tính để bàn (Desktop PC)",
+        "prefixCode": "PC",
+        "icon": "Monitor",
+        "expectedLifespanMonths": 48,
+        "description": "Máy tính để bàn văn phòng và chuyên dụng",
+        "createdAt": "2026-08-25T08:39:51.330Z",
+        "updatedAt": "2026-08-25T08:39:51.330Z"
+      },
+      {
+        "id": "b94d1dcf-a8ec-4f7d-8c05-ae97138c3bbd",
+        "code": "CAT_NETWORK",
+        "name": "Thiết bị Mạng (Switch, Router, AP)",
+        "prefixCode": "NET",
+        "icon": "Network",
+        "expectedLifespanMonths": 60,
+        "description": "Switch mạng, Router Core, Firewall, Access Point Wifi",
+        "createdAt": "2026-08-25T08:39:51.356Z",
+        "updatedAt": "2026-08-25T08:39:51.356Z"
+      },
+      {
+        "id": "fad404e8-3f98-47bd-9611-09bb67153506",
+        "code": "CAT_SERVER",
+        "name": "Máy chủ (Server)",
+        "prefixCode": "SRV",
+        "icon": "Server",
+        "expectedLifespanMonths": 60,
+        "description": "Hệ thống máy chủ rackmount/tower",
+        "createdAt": "2026-08-25T08:39:51.341Z",
+        "updatedAt": "2026-08-25T08:39:51.341Z"
+      }
+    ],
+    "warehouses": [
+      {
+        "id": "484b5e03-b567-4552-b070-214f642b094a",
+        "code": "KHO_TONG",
+        "name": "Kho Tài Sản Tổng (Tầng 1)",
+        "location": "Tòa nhà B - Tầng 1",
+        "managerEmployeeId": "9c2d8f8d-73d1-47c2-a78d-17d0caaa1f0e",
+        "description": "Kho chứa thiết bị đóng thùng nguyên seal và thiết bị dự phòng lớn",
+        "createdAt": "2026-08-25T08:39:51.368Z",
+        "updatedAt": "2026-08-25T08:39:51.368Z"
+      },
+      {
+        "id": "bdd6fa9f-b594-4b20-bfc7-029f16a7d3e0",
+        "code": "KHO_THANH_LY",
+        "name": "Kho Thiết Bị Chờ Thanh Lý & Hỏng",
+        "location": "Tòa nhà B - Tầng Hầm B1",
+        "managerEmployeeId": "7f5eefb5-a1e4-476c-ac5d-8d4dbc76c542",
+        "description": "Chứa máy móc hỏng, linh kiện lỗi chờ thủ tục thanh lý hủy",
+        "createdAt": "2026-08-25T08:39:51.372Z",
+        "updatedAt": "2026-08-25T08:39:51.372Z"
+      },
+      {
+        "id": "e4996002-fee6-4c58-9375-e1042c9eaab0",
+        "code": "KHO_IT",
+        "name": "Kho Thiết Bị CNTT (Tầng 2)",
+        "location": "Tòa nhà A - Tầng 2 - Phòng 205",
+        "managerEmployeeId": "7f5eefb5-a1e4-476c-ac5d-8d4dbc76c542",
+        "description": "Kho lưu trữ máy tính, linh kiện RAM, ổ cứng, card mạng sẵn sàng cấp phát",
+        "createdAt": "2026-08-25T08:39:51.360Z",
+        "updatedAt": "2026-08-25T08:39:51.360Z"
+      }
+    ],
+    "vendors": [
+      {
+        "id": "b124f008-8f8c-47ef-9f99-3cea05a21120",
+        "code": "NCC_DGW",
+        "name": "Công ty Cổ phần Thế Giới Số (Digiworld)",
+        "taxCode": "0302888765",
+        "phone": "028 3929 0059",
+        "email": "info@digiworld.com.vn",
+        "address": "195 Cô Bắc, Phường Cô Giang, Quận 1, TP. Hồ Chí Minh",
+        "contactPerson": "Bà Nguyễn Thị Mai (Phụ trách Kênh Doanh nghiệp)",
+        "notes": "Phân phối Laptop Dell, HP, ThinkPad chính hãng",
+        "createdAt": "2026-08-25T08:39:51.383Z",
+        "updatedAt": "2026-08-25T08:39:51.383Z"
+      },
+      {
+        "id": "c05acc74-5e54-4d39-bdb3-789c3a856d49",
+        "code": "NCC_PHONGVU",
+        "name": "Công ty Cổ phần Thương Mại - Dịch Vụ Phong Vũ",
+        "taxCode": "0304998811",
+        "phone": "1800 6867",
+        "email": "cskh@phongvu.vn",
+        "address": "Tầng 11, Tòa nhà Viettel, 285 Cách Mạng Tháng 8, P.12, Q.10, TP.HCM",
+        "contactPerson": "Anh Lê Minh Quân (Sales Doanh nghiệp)",
+        "notes": "Cung cấp linh kiện máy tính, RAM, SSD, màn hình văn phòng",
+        "createdAt": "2026-08-25T08:39:51.388Z",
+        "updatedAt": "2026-08-25T08:39:51.388Z"
+      },
+      {
+        "id": "cebffa97-436a-467c-abab-a7ea06884d7e",
+        "code": "NCC_FPT",
+        "name": "Công ty TNHH Hệ thống Thông tin FPT (FPT IS)",
+        "taxCode": "0101265897",
+        "phone": "024 7300 7300",
+        "email": "contact@fpt-is.com",
+        "address": "Tòa nhà FPT Cầu Giấy, Phố Duy Tân, Cầu Giấy, Hà Nội",
+        "contactPerson": "Ông Vũ Tuấn Anh (Giám đốc Khách hàng)",
+        "notes": "Nhà cung cấp máy chủ Dell/HP và giải pháp mạng bảo mật",
+        "createdAt": "2026-08-25T08:39:51.375Z",
+        "updatedAt": "2026-08-25T08:39:51.375Z"
+      }
+    ],
+    "systemSettings": [
+      {
+        "key": "alert_disk_change",
+        "value": "true",
+        "group": "ALERT_THRESHOLDS",
+        "updatedAt": "2026-08-25T08:39:51.126Z"
+      },
+      {
+        "key": "alert_disk_critical_percent",
+        "value": "5",
+        "group": "ALERT_THRESHOLDS",
+        "updatedAt": "2026-08-25T08:39:51.118Z"
+      },
+      {
+        "key": "alert_disk_warning_percent",
+        "value": "15",
+        "group": "ALERT_THRESHOLDS",
+        "updatedAt": "2026-08-25T08:39:51.115Z"
+      },
+      {
+        "key": "alert_gpu_change",
+        "value": "true",
+        "group": "ALERT_THRESHOLDS",
+        "updatedAt": "2026-08-25T08:39:51.129Z"
+      },
+      {
+        "key": "alert_ram_change",
+        "value": "true",
+        "group": "ALERT_THRESHOLDS",
+        "updatedAt": "2026-08-25T08:39:51.122Z"
+      },
+      {
+        "key": "backup_auto_enabled",
+        "value": "true",
+        "group": "BACKUP_SCHEDULE",
+        "updatedAt": "2026-08-25T08:39:51.132Z"
+      },
+      {
+        "key": "backup_frequency",
+        "value": "DAILY",
+        "group": "BACKUP_SCHEDULE",
+        "updatedAt": "2026-08-25T08:39:51.134Z"
+      },
+      {
+        "key": "backup_time",
+        "value": "02:00",
+        "group": "BACKUP_SCHEDULE",
+        "updatedAt": "2026-08-25T08:39:51.136Z"
+      },
+      {
+        "key": "org_address",
+        "value": "Số 88 Đường Cầu Giấy, Phường Quan Hoa, Quận Cầu Giấy, TP. Hà Nội",
+        "group": "ORGANIZATION_INFO",
+        "updatedAt": "2026-08-25T08:39:51.076Z"
+      },
+      {
+        "key": "org_email",
+        "value": "contact@assetone.vn",
+        "group": "ORGANIZATION_INFO",
+        "updatedAt": "2026-08-25T08:39:51.074Z"
+      },
+      {
+        "key": "org_favicon_url",
+        "value": "",
+        "group": "ORGANIZATION_INFO",
+        "updatedAt": "2026-08-25T08:39:51.083Z"
+      },
+      {
+        "key": "org_logo_url",
+        "value": "",
+        "group": "ORGANIZATION_INFO",
+        "updatedAt": "2026-08-25T08:39:51.082Z"
+      },
+      {
+        "key": "org_name",
+        "value": "Bệnh viện Đa khoa Quốc tế AssetOne",
+        "group": "ORGANIZATION_INFO",
+        "updatedAt": "2026-08-25T08:39:51.057Z"
+      },
+      {
+        "key": "org_phone",
+        "value": "024 3888 9999",
+        "group": "ORGANIZATION_INFO",
+        "updatedAt": "2026-08-25T08:39:51.069Z"
+      },
+      {
+        "key": "org_tax_code",
+        "value": "0109887766",
+        "group": "ORGANIZATION_INFO",
+        "updatedAt": "2026-08-25T08:39:51.066Z"
+      },
+      {
+        "key": "org_website",
+        "value": "https://assetone.vn",
+        "group": "ORGANIZATION_INFO",
+        "updatedAt": "2026-08-25T08:39:51.080Z"
+      },
+      {
+        "key": "scan_auto_discover",
+        "value": "true",
+        "group": "SCAN_PARAMETERS",
+        "updatedAt": "2026-08-25T08:39:51.113Z"
+      },
+      {
+        "key": "scan_heartbeat_minutes",
+        "value": "15",
+        "group": "SCAN_PARAMETERS",
+        "updatedAt": "2026-08-25T08:39:51.104Z"
+      },
+      {
+        "key": "scan_ip_ranges",
+        "value": "192.168.1.0/24, 192.168.10.0/24, 10.0.0.0/16",
+        "group": "SCAN_PARAMETERS",
+        "updatedAt": "2026-08-25T08:39:51.101Z"
+      },
+      {
+        "key": "scan_offline_days",
+        "value": "3",
+        "group": "SCAN_PARAMETERS",
+        "updatedAt": "2026-08-25T08:39:51.108Z"
+      },
+      {
+        "key": "soft_copyright",
+        "value": "© 2026 AssetOne. All rights reserved.",
+        "group": "SOFTWARE_INFO",
+        "updatedAt": "2026-08-25T08:39:51.093Z"
+      },
+      {
+        "key": "soft_name",
+        "value": "AssetOne - IT Asset Management & Endpoint Discovery System",
+        "group": "SOFTWARE_INFO",
+        "updatedAt": "2026-08-25T08:39:51.085Z"
+      },
+      {
+        "key": "soft_support_email",
+        "value": "support@assetone.vn",
+        "group": "SOFTWARE_INFO",
+        "updatedAt": "2026-08-25T08:39:51.099Z"
+      },
+      {
+        "key": "soft_support_phone",
+        "value": "1900 6868",
+        "group": "SOFTWARE_INFO",
+        "updatedAt": "2026-08-25T08:39:51.095Z"
+      },
+      {
+        "key": "soft_vendor",
+        "value": "AssetOne Enterprise Solutions",
+        "group": "SOFTWARE_INFO",
+        "updatedAt": "2026-08-25T08:39:51.091Z"
+      },
+      {
+        "key": "soft_version",
+        "value": "1.0.0 Enterprise",
+        "group": "SOFTWARE_INFO",
+        "updatedAt": "2026-08-25T08:39:51.088Z"
+      }
+    ],
+    "assets": [],
+    "handoverRecords": [],
+    "maintenanceLogs": []
+  }
+}

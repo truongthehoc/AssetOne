@@ -1,0 +1,441 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// --------------------------------------------------------
+// 1. DANH MỤC HỆ THỐNG (MASTER DATA)
+// --------------------------------------------------------
+
+model Department {
+  id          String       @id @default(uuid())
+  code        String       @unique @db.VarChar(50)
+  name        String       @db.VarChar(255)
+  parentId    String?      @map("parent_id")
+  level       Int          @default(1)
+  orderIndex  Int          @default(0) @map("order_index")
+  description String?      @db.Text
+  createdAt   DateTime     @default(now()) @map("created_at")
+  updatedAt   DateTime     @updatedAt @map("updated_at")
+
+  // Hierarchical relations
+  parent      Department?  @relation("DepartmentHierarchy", fields: [parentId], references: [id], onDelete: Restrict)
+  children    Department[] @relation("DepartmentHierarchy")
+
+  // Relational constraints
+  employees   Employee[]
+  assets      Asset[]
+  auditSessions AuditSession[]
+
+  @@index([parentId])
+  @@map("departments")
+}
+
+model Position {
+  id          String     @id @default(uuid())
+  code        String     @unique @db.VarChar(50)
+  name        String     @db.VarChar(255)
+  description String?    @db.Text
+  createdAt   DateTime   @default(now()) @map("created_at")
+  updatedAt   DateTime   @updatedAt @map("updated_at")
+
+  employees   Employee[]
+
+  @@map("positions")
+}
+
+enum EmployeeStatus {
+  ACTIVE
+  PROBATION
+  RESIGNED
+}
+
+model Employee {
+  id             String         @id @default(uuid())
+  employeeCode   String         @unique @map("employee_code") @db.VarChar(50)
+  fullName       String         @map("full_name") @db.VarChar(255)
+  email          String?        @unique @db.VarChar(255)
+  phone          String?        @db.VarChar(50)
+  gender         String?        @db.VarChar(10)
+  status         EmployeeStatus @default(ACTIVE)
+  departmentId   String         @map("department_id")
+  positionId     String         @map("position_id")
+  joinDate       DateTime?      @map("join_date")
+  createdAt      DateTime       @default(now()) @map("created_at")
+  updatedAt      DateTime       @updatedAt @map("updated_at")
+
+  // Foreign keys
+  department     Department     @relation(fields: [departmentId], references: [id], onDelete: Restrict)
+  position       Position       @relation(fields: [positionId], references: [id], onDelete: Restrict)
+
+  // Reverse relations
+  user           User?
+  managedWarehouses Warehouse[]
+  assignedAssets Asset[]
+  fromHandovers  HandoverRecord[] @relation("HandoverFromEmployee")
+  toHandovers    HandoverRecord[] @relation("HandoverToEmployee")
+
+  @@index([departmentId])
+  @@index([positionId])
+  @@map("employees")
+}
+
+model AssetCategory {
+  id                    String   @id @default(uuid())
+  code                  String   @unique @db.VarChar(50)
+  name                  String   @db.VarChar(255)
+  prefixCode            String   @default("ASSET") @map("prefix_code") @db.VarChar(20)
+  icon                  String?  @db.VarChar(50)
+  expectedLifespanMonths Int     @default(36) @map("expected_lifespan_months")
+  description           String?  @db.Text
+  createdAt             DateTime @default(now()) @map("created_at")
+  updatedAt             DateTime @updatedAt @map("updated_at")
+
+  assets                Asset[]
+
+  @@map("asset_categories")
+}
+
+model Warehouse {
+  id                String    @id @default(uuid())
+  code              String    @unique @db.VarChar(50)
+  name              String    @db.VarChar(255)
+  location          String?   @db.VarChar(255)
+  managerEmployeeId String?   @map("manager_employee_id")
+  description       String?   @db.Text
+  createdAt         DateTime  @default(now()) @map("created_at")
+  updatedAt         DateTime  @updatedAt @map("updated_at")
+
+  managerEmployee   Employee? @relation(fields: [managerEmployeeId], references: [id], onDelete: SetNull)
+  assets            Asset[]
+
+  @@index([managerEmployeeId])
+  @@map("warehouses")
+}
+
+model Vendor {
+  id            String   @id @default(uuid())
+  code          String   @unique @db.VarChar(50)
+  name          String   @db.VarChar(255)
+  taxCode       String?  @map("tax_code") @db.VarChar(50)
+  phone         String?  @db.VarChar(50)
+  email         String?  @db.VarChar(255)
+  address       String?  @db.VarChar(500)
+  contactPerson String?  @map("contact_person") @db.VarChar(255)
+  notes         String?  @db.Text
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  assets        Asset[]
+
+  @@map("vendors")
+}
+
+// --------------------------------------------------------
+// 2. QUẢN TRỊ HỆ THỐNG (SYSTEM ADMIN & SETTINGS)
+// --------------------------------------------------------
+
+enum UserRole {
+  ADMIN
+  IT_STAFF
+  EXECUTIVE
+  VIEWER
+}
+
+model User {
+  id           String    @id @default(uuid())
+  username     String    @unique @db.VarChar(100)
+  passwordHash String    @map("password_hash") @db.VarChar(255)
+  role         UserRole  @default(IT_STAFF)
+  employeeId   String?   @unique @map("employee_id")
+  isActive     Boolean   @default(true) @map("is_active")
+  avatarUrl    String?   @map("avatar_url") @db.Text
+  lastLoginAt  DateTime? @map("last_login_at")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+
+  employee     Employee? @relation(fields: [employeeId], references: [id], onDelete: Restrict)
+  auditRecords AuditRecord[]
+
+  @@map("users")
+}
+
+model SystemSetting {
+  key       String   @id @db.VarChar(100)
+  value     String   @db.LongText
+  group     String   @db.VarChar(50) // ORGANIZATION_INFO, SOFTWARE_INFO, SCAN_PARAMETERS, ALERT_THRESHOLDS, BACKUP_SCHEDULE
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([group])
+  @@map("system_settings")
+}
+
+enum BackupType {
+  AUTO
+  MANUAL
+}
+
+enum BackupStatus {
+  SUCCESS
+  FAILED
+}
+
+model BackupLog {
+  id        String       @id @default(uuid())
+  filename  String       @db.VarChar(255)
+  fileSize  BigInt       @default(0) @map("file_size")
+  type      BackupType   @default(MANUAL)
+  status    BackupStatus @default(SUCCESS)
+  notes     String?      @db.Text
+  createdAt DateTime     @default(now()) @map("created_at")
+
+  @@map("backup_logs")
+}
+
+// --------------------------------------------------------
+// 3. QUẢN LÝ VẬN HÀNH (OPERATIONS & ASSET MANAGEMENT)
+// --------------------------------------------------------
+
+enum AssetStatus {
+  IN_USE
+  IN_STORAGE
+  MAINTENANCE
+  LIQUIDATED
+}
+
+model Asset {
+  id                 String       @id @default(uuid())
+  assetCode          String       @unique @map("asset_code") @db.VarChar(100)
+  name               String       @db.VarChar(255)
+  categoryId         String       @map("category_id")
+  warehouseId        String?      @map("warehouse_id")
+  departmentId       String?      @map("department_id")
+  assignedEmployeeId String?      @map("assigned_employee_id")
+  vendorId           String?      @map("vendor_id")
+  status             AssetStatus  @default(IN_STORAGE)
+  purchasePrice      Decimal?     @map("purchase_price") @db.Decimal(15, 2)
+  purchaseDate       DateTime?    @map("purchase_date")
+  warrantyExpiry     DateTime?    @map("warranty_expiry")
+  qrCodeToken        String       @unique @map("qr_code_token") @db.VarChar(100)
+  notes              String?      @db.Text
+  createdAt          DateTime     @default(now()) @map("created_at")
+  updatedAt          DateTime     @updatedAt @map("updated_at")
+
+  // Foreign keys
+  category           AssetCategory @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  warehouse          Warehouse?    @relation(fields: [warehouseId], references: [id], onDelete: SetNull)
+  department         Department?   @relation(fields: [departmentId], references: [id], onDelete: SetNull)
+  assignedEmployee   Employee?     @relation(fields: [assignedEmployeeId], references: [id], onDelete: SetNull)
+  vendor             Vendor?       @relation(fields: [vendorId], references: [id], onDelete: SetNull)
+
+  // Reverse relations
+  discoveredDevices  DiscoveredDevice[]
+  hardwareSnapshots  HardwareSnapshot[]
+  softwareInventories SoftwareInventory[]
+  driftAlerts        HardwareDriftAlert[]
+  handoverRecords    HandoverRecord[]
+  maintenanceLogs    MaintenanceLog[]
+  auditRecords       AuditRecord[]
+
+  @@index([categoryId])
+  @@index([warehouseId])
+  @@index([departmentId])
+  @@index([assignedEmployeeId])
+  @@index([vendorId])
+  @@map("assets")
+}
+
+enum DeviceStatus {
+  UNASSIGNED
+  ASSIGNED
+  IGNORED
+}
+
+model DiscoveredDevice {
+  id              String       @id @default(uuid())
+  agentUuid       String       @unique @map("agent_uuid") @db.VarChar(100)
+  hostname        String       @db.VarChar(255)
+  ipAddress       String?      @map("ip_address") @db.VarChar(100)
+  macAddress      String?      @map("mac_address") @db.VarChar(100)
+  osName          String?      @map("os_name") @db.VarChar(255)
+  osVersion       String?      @map("os_version") @db.VarChar(100)
+  rawSpecs        Json?        @map("raw_specs")
+  status          DeviceStatus @default(UNASSIGNED)
+  assignedAssetId String?      @map("assigned_asset_id")
+  lastSeenAt      DateTime     @default(now()) @map("last_seen_at")
+  createdAt       DateTime     @default(now()) @map("created_at")
+  updatedAt       DateTime     @updatedAt @map("updated_at")
+
+  assignedAsset   Asset?       @relation(fields: [assignedAssetId], references: [id], onDelete: SetNull)
+
+  @@index([assignedAssetId])
+  @@map("discovered_devices")
+}
+
+model HardwareSnapshot {
+  id              String   @id @default(uuid())
+  assetId         String   @map("asset_id")
+  cpuInfo         Json?    @map("cpu_info")
+  ramSlots        Json?    @map("ram_slots")
+  storageDrives   Json?    @map("storage_drives")
+  motherboardSn   String?  @map("motherboard_sn") @db.VarChar(255)
+  gpuInfo         Json?    @map("gpu_info")
+  networkAdapters Json?    @map("network_adapters")
+  monitors        Json?    @map("monitors")
+  isBaseline      Boolean  @default(false) @map("is_baseline")
+  recordedAt      DateTime @default(now()) @map("recorded_at")
+
+  asset           Asset    @relation(fields: [assetId], references: [id], onDelete: Cascade)
+
+  @@index([assetId])
+  @@map("hardware_snapshots")
+}
+
+model SoftwareInventory {
+  id               String    @id @default(uuid())
+  assetId          String    @map("asset_id")
+  softwareName     String    @map("software_name") @db.VarChar(255)
+  version          String?   @db.VarChar(100)
+  publisher        String?   @db.VarChar(255)
+  installDate      String?   @map("install_date") @db.VarChar(100)
+  firstDetectedAt  DateTime  @default(now()) @map("first_detected_at")
+  lastDetectedAt   DateTime  @default(now()) @map("last_detected_at")
+
+  asset            Asset     @relation(fields: [assetId], references: [id], onDelete: Cascade)
+
+  @@index([assetId])
+  @@map("software_inventories")
+}
+
+enum AlertSeverity {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+model HardwareDriftAlert {
+  id              String        @id @default(uuid())
+  assetId         String        @map("asset_id")
+  alertType       String        @map("alert_type") @db.VarChar(100) // RAM_REDUCED, RAM_SERIAL_CHANGED, DISK_CHANGED, DISK_SPACE_LOW, UNAPPROVED_SW
+  severity        AlertSeverity @default(MEDIUM)
+  details         Json?
+  isAcknowledged  Boolean       @default(false) @map("is_acknowledged")
+  acknowledgedAt  DateTime?     @map("acknowledged_at")
+  createdAt       DateTime      @default(now()) @map("created_at")
+
+  asset           Asset         @relation(fields: [assetId], references: [id], onDelete: Cascade)
+
+  @@index([assetId])
+  @@map("hardware_drift_alerts")
+}
+
+enum HandoverType {
+  ALLOCATE
+  RECALL
+  REPAIR_SEND
+  REPAIR_RECEIVE
+  LIQUIDATE
+}
+
+model HandoverRecord {
+  id                String       @id @default(uuid())
+  documentCode      String       @unique @map("document_code") @db.VarChar(100)
+  type              HandoverType
+  assetId           String       @map("asset_id")
+  fromEmployeeId    String?      @map("from_employee_id")
+  toEmployeeId      String?      @map("to_employee_id")
+  handoverDate      DateTime     @default(now()) @map("handover_date")
+  checklistSnapshot Json?        @map("checklist_snapshot")
+  notes             String?      @db.Text
+  pdfFilePath       String?      @map("pdf_file_path") @db.VarChar(500)
+  createdAt         DateTime     @default(now()) @map("created_at")
+
+  asset             Asset        @relation(fields: [assetId], references: [id], onDelete: Cascade)
+  fromEmployee      Employee?    @relation("HandoverFromEmployee", fields: [fromEmployeeId], references: [id], onDelete: SetNull)
+  toEmployee        Employee?    @relation("HandoverToEmployee", fields: [toEmployeeId], references: [id], onDelete: SetNull)
+
+  @@index([assetId])
+  @@index([fromEmployeeId])
+  @@index([toEmployeeId])
+  @@map("handover_records")
+}
+
+enum MaintenanceStatus {
+  SCHEDULED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+model MaintenanceLog {
+  id             String            @id @default(uuid())
+  assetId        String            @map("asset_id")
+  title          String            @db.VarChar(255)
+  description    String?           @db.Text
+  cost           Decimal?          @db.Decimal(15, 2)
+  technicianName String?           @map("technician_name") @db.VarChar(255)
+  startDate      DateTime?         @map("start_date")
+  completionDate DateTime?         @map("completion_date")
+  status         MaintenanceStatus @default(SCHEDULED)
+  createdAt      DateTime          @default(now()) @map("created_at")
+  updatedAt      DateTime          @updatedAt @map("updated_at")
+
+  asset          Asset             @relation(fields: [assetId], references: [id], onDelete: Cascade)
+
+  @@index([assetId])
+  @@map("maintenance_logs")
+}
+
+enum AuditSessionStatus {
+  ACTIVE
+  COMPLETED
+}
+
+model AuditSession {
+  id                 String             @id @default(uuid())
+  sessionName        String             @map("session_name") @db.VarChar(255)
+  targetDepartmentId String?            @map("target_department_id")
+  status             AuditSessionStatus @default(ACTIVE)
+  startedAt          DateTime           @default(now()) @map("started_at")
+  endedAt            DateTime?          @map("ended_at")
+  notes              String?            @db.Text
+  createdAt          DateTime           @default(now()) @map("created_at")
+
+  targetDepartment   Department?        @relation(fields: [targetDepartmentId], references: [id], onDelete: SetNull)
+  records            AuditRecord[]
+
+  @@index([targetDepartmentId])
+  @@map("audit_sessions")
+}
+
+enum AuditMatchStatus {
+  MATCHED
+  WRONG_LOCATION
+  WRONG_USER
+  NOT_FOUND
+}
+
+model AuditRecord {
+  id              String           @id @default(uuid())
+  sessionId       String           @map("session_id")
+  assetId         String           @map("asset_id")
+  scannedByUserId String?          @map("scanned_by_user_id")
+  scannedAt       DateTime         @default(now()) @map("scanned_at")
+  matchStatus     AuditMatchStatus @default(MATCHED) @map("match_status")
+  actualLocation  String?          @map("actual_location") @db.VarChar(255)
+  notes           String?          @db.Text
+
+  session         AuditSession     @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  asset           Asset            @relation(fields: [assetId], references: [id], onDelete: Cascade)
+  scannedByUser   User?            @relation(fields: [scannedByUserId], references: [id], onDelete: SetNull)
+
+  @@index([sessionId])
+  @@index([assetId])
+  @@index([scannedByUserId])
+  @@map("audit_records")
+}
